@@ -50,13 +50,33 @@ const playRound = (playerSelection, computerSelection) => {
 //console.log(playRound())
 
 const game = () => {
+    let playerResult = 0;
+    let computerResult = 0;
+
     for (let i = 0; i < 5; i++){
         playRound();
-        console.log(playRound())
-        // if (){
-        //     console.log(`tie`)
-        // }
+        if (playRound().valueOf() === `It's a Tie`){
+            console.log(`tie`)
+        } else if (
+            playRound().valueOf() === `You lose!! Paper covers Rock`||
+            playRound().valueOf() === `You lose!! Scissors cut Paper`||
+            playRound().valueOf() === `You lose!! Rock Crushes Scissors`) {
+            
+            computerResult++
+            // if(computerResult > playerResult) {
+            //     alert(`computer wins`)
+            // }
+        } else if (
+            playRound().valueOf() === `You win!! Paper covers Rock`||
+            playRound().valueOf() === `You win!! Scissors cut Paper`||
+            playRound().valueOf() === `You win!! Rock Crushes Scissors`) {
+            
+            playerResult++
+            // if (computerResult < playerResult) {
+            //     alert(`Player Wins`)
+            // }
+        }
     }
 }
 
-console.log(game())
+game();
