@@ -5,11 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
+    <div class="select-btn">
+        <button id="btn" data-btn="rock">Rock</button>
+        <button id="btn" data-btn="paper">Paper</button>
+        <button id="btn" data-btn="scissors">Scissors</button>
+    </div>
+    <div class="results">
+        <div>
+            You
+            <span class="result-scr" data-your-scr>0</span>
+        </div>
+        <div data-final-col>
+            Computer
+            <span class="result-scr" data-computer-scr>0</span>
+        </div>
+    </div>
+
     <script defer src="script.js"></script>
+    
 </body>
 </html>

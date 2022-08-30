@@ -1,62 +1,66 @@
-const computerSelectionArray = ["Rock", "Paper", "Scissors"];
-let playerResult = 0;
-let computerResult = 0;
-let outcome = "";
-// const rock = document.querySelector('#rock')
-// rock.addEventListener('click', () => {
+const selectionBtn = document.querySelectorAll('[data-btn]');
+const finalCol = document.querySelector('[data-final-col]');
+const computerScoreSpan = document.querySelector('[data-computer-scr]')
+const yourScoreSpan = document.querySelector('[data-your-scr]')
 
-// })
+const SELECTIONS = [
+    {
+        name: 'rock',
+        text: 'Big Rock',
+        beats: 'scissors'
+    },
+    {
+        name: 'paper',
+        text: 'Big ass sheet Of Paper',
+        beats: 'rock'
+    },
+    {
+        name: 'scissors',
+        text: 'Even biger Scissors',
+        beats: 'paper'
+    },
+]
+
+selectionBtn.forEach(selectionBtn => {
+    selectionBtn.addEventListener('click', e => {
+        const playerSelection = selectionBtn.dataset.btn;
+        const selection = SELECTIONS.find(btn => btn.name === playerSelection)
+        makeSelection(selection);
+        
+    })
+})
+
+function makeSelection(btn) {
+    const computerSelection = getComputerChoice();
+    const youAreWinner = whoWins(btn, computerSelection);
+    const computerWins = whoWins(computerSelection, btn);
+
+    addResult(computerSelection, computerWins)
+    addResult(btn, youAreWinner);
+
+    if (youAreWinner) incrementScore(yourScoreSpan)
+    if (computerWins) incrementScore(computerScoreSpan)
+}
+
+function incrementScore(scoreSpan) {
+    scoreSpan.innerText = parseInt(scoreSpan.innerText) + 1
+  }
+
+function addResult(selection, winner) {
+    const div = document.createElement('div');
+    div.innerText = selection.text;
+    div.classList.add('result-selection');
+    if (winner) {
+        div.classList.add('winner');
+    }
+    finalCol.after(div)
+}
+
+function whoWins(selection, rivalSelection) {
+    return selection.beats === rivalSelection.name
+}
 
 const getComputerChoice = () => {
-  let choice =
-    computerSelectionArray[
-      Math.floor(Math.random() * computerSelectionArray.length)
-    ];
-  return choice.toLowerCase();
-};
-
-const playRound = (playerSelection, computerSelection) => {
-  playerSelection = prompt(`Chose Your weapon!!`).toLowerCase().valueOf();
-  computerSelection = getComputerChoice().valueOf();
-
-  if (playerSelection === computerSelection) {
-    outcome = `It's a Tie`;
-  } else if (playerSelection === "rock" && computerSelection === "paper") {
-    outcome = `You lose!! Paper covers Rock`;
-    computerResult++;
-  } else if (playerSelection === "paper" && computerSelection === "scissors") {
-    outcome = `You lose!! Scissors cut Paper`;
-    computerResult++;
-  } else if (playerSelection === "scissors" && computerSelection === "rock") {
-    outcome = `You lose!! Rock Crushes Scissors`;
-    computerResult++;
-  } else if (playerSelection === "paper" && computerSelection === "rock") {
-    outcome = `You win!! Paper covers Rock`;
-    playerResult++;
-  } else if (playerSelection === "scissors" && computerSelection === "paper") {
-    outcome = `You win!! Scissors cut Paper`;
-    playerResult++;
-  } else if (playerSelection === "rock" && computerSelection === "scissors") {
-    outcome = `You win!! Rock Crushes Scissors`;
-    playerResult++;
-  }
-
-  return outcome;
-};
-
-// console.log(playRound())
-
-const game = () => {
-  for (let i = 0; i < 5; i++) {
-    playRound();
-    console.log(playerResult);
-    console.log(computerResult);
-  }
-  if (computerResult > playerResult) {
-    return `Computer Wins`;
-  } else {
-    return `You Win`;
-  }
-};
-
-console.log(game());
+    let choice = Math.floor(Math.random() * SELECTIONS.length)
+    return SELECTIONS[choice];
+  };
