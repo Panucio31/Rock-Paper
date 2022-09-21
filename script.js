@@ -8,8 +8,8 @@ const buttonsContainer = document.querySelector(".select-btn");
 
 const STATE = {
   rounds: 3,
-  score: 0,
-}
+  score: 1,
+};
 
 const SELECTIONS = [
   {
@@ -36,7 +36,7 @@ const declareWinner = () => {
   ) {
     buttonsContainer.classList.add("d-none");
     result.innerHTML = "Computer WINS!!";
-    restart.classList.remove('btn-none')
+    restart.classList.remove("btn-none");
     restart.addEventListener("click", () => {
       location.reload();
     });
@@ -46,7 +46,7 @@ const declareWinner = () => {
   ) {
     buttonsContainer.classList.add("d-none");
     result.innerHTML = "You WIN!!";
-    restart.classList.remove('btn-none')
+    restart.classList.remove("btn-none");
     restart.addEventListener("click", () => {
       location.reload();
     });
@@ -62,14 +62,15 @@ selectionBtn.forEach((selectionBtn) => {
   });
 });
 
-function whoGetsPoint(btn, computerSelection) {
-  const youAreWinner = whoWins(btn, computerSelection);
-  const computerWins = whoWins(computerSelection, btn);
-  
-  addResult(computerSelection, computerWins);
-  addResult(btn, youAreWinner);
 
-  if (youAreWinner) incrementScore(yourScoreSpan);
+function whoGetsPoint(btn, computerSelection) {
+  const playerWins = whoWins(btn, computerSelection);
+  const computerWins = whoWins(computerSelection, btn);
+
+  addResult(computerSelection, computerWins);
+  addResult(btn, playerWins);
+
+  if (playerWins) incrementScore(yourScoreSpan);
   if (computerWins) incrementScore(computerScoreSpan);
 
   declareWinner();
