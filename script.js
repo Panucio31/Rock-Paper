@@ -6,10 +6,7 @@ const result = document.querySelector(".winer");
 const restart = document.querySelector(".restart");
 const buttonsContainer = document.querySelector(".select-btn");
 
-const STATE = {
-  rounds: 3,
-  score: 1,
-};
+const roundsToWin = '3';
 
 const SELECTIONS = [
   {
@@ -29,29 +26,26 @@ const SELECTIONS = [
   },
 ];
 
+
 const declareWinner = () => {
-  if (
-    parseInt(computerScoreSpan.innerHTML) === STATE.rounds &&
-    parseInt(yourScoreSpan.innerHTML) < parseInt(computerScoreSpan.innerHTML)
-  ) {
-    buttonsContainer.classList.add("d-none");
-    result.innerHTML = "Computer WINS!!";
-    restart.classList.remove("btn-none");
-    restart.addEventListener("click", () => {
-      location.reload();
-    });
-  } else if (
-    parseInt(yourScoreSpan.innerHTML) === STATE.rounds &&
-    parseInt(yourScoreSpan.innerHTML) > parseInt(computerScoreSpan.innerHTML)
-  ) {
-    buttonsContainer.classList.add("d-none");
-    result.innerHTML = "You WIN!!";
-    restart.classList.remove("btn-none");
-    restart.addEventListener("click", () => {
-      location.reload();
-    });
+  if(yourScoreSpan.innerHTML !== roundsToWin && computerScoreSpan.innerHTML !== roundsToWin) {
+    return;
   }
-};
+  
+  if(yourScoreSpan.innerHTML === roundsToWin) {
+    result.innerHTML = "You WIN!!";
+    
+  }
+  if(computerScoreSpan.innerHTML === roundsToWin) {
+    result.innerHTML = "Computer WINS!!";
+  }
+
+  if(computerScoreSpan.innerHTML === roundsToWin || yourScoreSpan.innerHTML === roundsToWin) {
+    buttonsContainer.classList.add("d-none");
+    restart.classList.remove("btn-none");
+  }
+  
+}
 
 selectionBtn.forEach((selectionBtn) => {
   selectionBtn.addEventListener("click", () => {
@@ -77,7 +71,7 @@ function whoGetsPoint(btn, computerSelection) {
 }
 
 function incrementScore(scoreSpan) {
-  scoreSpan.innerText = STATE.score++;
+  scoreSpan.innerText = parseInt(scoreSpan.innerText) + 1;
 }
 
 function addResult(selection, winner) {
@@ -98,3 +92,7 @@ const getComputerChoice = () => {
   let choice = Math.floor(Math.random() * SELECTIONS.length);
   return SELECTIONS[choice];
 };
+
+restart.addEventListener("click", () => {
+  location.reload();
+});
